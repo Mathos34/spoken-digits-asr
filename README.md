@@ -57,7 +57,7 @@ Trained for 20 epochs, batch 32, Adam lr 1e-3. Best checkpoint is the one with t
 | Train / Test split | 2,700 / 300 utterances |
 | Training time (CPU) | ~60 s |
 
-Final-epoch CER fluctuates between 2 and 5% — typical behavior on a small dataset; we keep the best checkpoint.
+Final-epoch CER fluctuates between 2 and 5%, typical behavior on a small dataset; we keep the best checkpoint.
 
 ## References
 
