@@ -12,8 +12,14 @@ import torch
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from src.data import (FSDDDataset, compute_logmel, discover, greedy_ctc_decode,
-                      ids_to_str, load_wav, split_by_index)  # noqa: E402
+from src.data import (
+    compute_logmel,
+    discover,
+    greedy_ctc_decode,
+    ids_to_str,  # noqa: E402
+    load_wav,
+    split_by_index,
+)
 from src.model import TinyCTC  # noqa: E402
 
 

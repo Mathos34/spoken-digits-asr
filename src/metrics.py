@@ -17,6 +17,6 @@ def levenshtein(a: str, b: str) -> int:
 
 
 def cer(refs: list[str], hyps: list[str]) -> float:
-    total_dist = sum(levenshtein(r, h) for r, h in zip(refs, hyps))
+    total_dist = sum(levenshtein(r, h) for r, h in zip(refs, hyps, strict=False))
     total_chars = sum(max(1, len(r)) for r in refs)
     return total_dist / total_chars
