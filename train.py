@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import time
 from pathlib import Path
 
 import numpy as np
@@ -12,8 +11,15 @@ import torch.nn as nn
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
-from src.data import (BLANK_ID, FSDDDataset, collate, discover, greedy_ctc_decode,
-                      ids_to_str, split_by_index)
+from src.data import (
+    BLANK_ID,
+    FSDDDataset,
+    collate,
+    discover,
+    greedy_ctc_decode,
+    ids_to_str,
+    split_by_index,
+)
 from src.metrics import cer
 from src.model import TinyCTC, count_params
 
@@ -103,12 +109,12 @@ def main() -> None:
     print("Final eval...")
     model.load_state_dict(torch.load(out_dir / "model.pt", map_location="cpu"))
     final_cer, refs, hyps = evaluate(model, test_loader)
-    correct = sum(1 for r, h in zip(refs, hyps) if r == h)
+    correct = sum(1 for r, h in zip(refs, hyps, strict=False) if r == h)
     accuracy = correct / max(1, len(refs))
 
     confusion = np.zeros((10, 10), dtype=np.int64)
     null_predictions = 0
-    for r, h in zip(refs, hyps):
+    for r, h in zip(refs, hyps, strict=False):
         ri = int(r) if r else None
         if not h:
             null_predictions += 1

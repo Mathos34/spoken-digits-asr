@@ -11,7 +11,6 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
-import numpy as np
 import torch
 import torchaudio
 from torch.utils.data import Dataset
@@ -135,7 +134,7 @@ class FSDDDataset(Dataset):
 
 
 def collate(batch):
-    feats, targets = zip(*batch)
+    feats, targets = zip(*batch, strict=False)
     feat_lens = torch.tensor([f.shape[0] for f in feats], dtype=torch.long)
     target_lens = torch.tensor([t.shape[0] for t in targets], dtype=torch.long)
     max_t = int(feat_lens.max())
