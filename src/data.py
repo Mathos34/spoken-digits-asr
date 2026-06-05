@@ -10,9 +10,9 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Any
 
 import torch
-import torchaudio
 from torch.utils.data import Dataset
 
 SAMPLE_RATE = 8000
@@ -83,12 +83,16 @@ def split_by_index(samples: list[Sample], train_max_idx: int = 39) -> tuple[list
     return train, test
 
 
-_mel_extractor: torchaudio.transforms.MelSpectrogram | None = None
+_mel_extractor: Any = None
 
 
-def _get_mel() -> torchaudio.transforms.MelSpectrogram:
+def _get_mel() -> Any:
+    """Build (and memoize) the log-mel transform. torchaudio is imported lazily so
+    callers that only need the CTC vocabulary / decoder do not pay the audio-stack
+    install cost (useful in CI test paths)."""
     global _mel_extractor
     if _mel_extractor is None:
+        import torchaudio  # noqa: PLC0415
         _mel_extractor = torchaudio.transforms.MelSpectrogram(
             sample_rate=SAMPLE_RATE, n_fft=N_FFT, win_length=WIN_LEN, hop_length=HOP_LEN,
             n_mels=N_MELS, power=2.0,
@@ -97,6 +101,8 @@ def _get_mel() -> torchaudio.transforms.MelSpectrogram:
 
 
 def load_wav(path: Path) -> torch.Tensor:
+    """Load a WAV at SAMPLE_RATE. Lazy torchaudio import; see _get_mel docstring."""
+    import torchaudio  # noqa: PLC0415
     wav, sr = torchaudio.load(str(path))
     if wav.shape[0] > 1:
         wav = wav.mean(dim=0, keepdim=True)
