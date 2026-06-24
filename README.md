@@ -2,7 +2,7 @@
 
 A tiny CTC speech recognizer trained from scratch on the Free Spoken Digit Dataset.
 
-![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white) ![PyTorch](https://img.shields.io/badge/PyTorch-2.5-EE4C2C?logo=pytorch&logoColor=white) ![License](https://img.shields.io/badge/License-MIT-green)
+[![CI](https://github.com/Mathos34/spoken-digits-asr/actions/workflows/ci.yml/badge.svg)](https://github.com/Mathos34/spoken-digits-asr/actions/workflows/ci.yml) ![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white) ![PyTorch](https://img.shields.io/badge/PyTorch-2.5-EE4C2C?logo=pytorch&logoColor=white) ![License](https://img.shields.io/badge/License-MIT-green)
 
 ![result](assets/result.png)
 
